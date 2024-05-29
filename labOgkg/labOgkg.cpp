@@ -58,12 +58,7 @@ vector<Point> convexHullJarvis(const vector<Point>& points) {
 	vector<Point> hull;
 
 	int leftmost = 0;
-	for (int i = 1; i < points.size(); i++) {
-		if (points[i].x < points[leftmost].x) {
-			leftmost = i;
-		}
-	}
-
+	
 	int p = leftmost, q;
 	do {
 		hull.push_back(points[p]);
@@ -85,15 +80,15 @@ double triangleArea(const Point & p1, const Point & p2, const Point & p3) {
 }
 
 
-// Функція для знаходження найбільшого за площею трикутника, вписаного в опуклу оболонку методом "Розділяй та володарюй"
-std::vector<Point> largestInscribedTriangle(const std::vector<Point>& convexHull) {
+// Функція для знаходження найбільшого за площею трикутника, вписаного в опуклу оболонку
+vector<Point> largestInscribedTriangle(const vector<Point>& convexHull) {
 	int n = convexHull.size();
 	if (n < 3) return {};
 
 	double maxArea = 0.0;
-	std::vector<Point> maxTriangle;
+	vector<Point> maxTriangle;
 
-	auto findMaxTriangle = [&](const std::vector<Point>& points, int left, int right) {
+	auto findMaxTriangle = [&](const vector<Point>& points, int left, int right) {
 		if (right - left < 2) return;
 
 		// Шукаємо всі можливі трикутники у відрізку між left і right
@@ -167,13 +162,13 @@ int main()
 		}
 
 		if (maxTriangle.size() == 3) {
-			sf::VertexArray triangleLines(sf::LinesStrip, 4);
+			VertexArray triangleLines(LinesStrip, 4);
 			for (int i = 0; i < 3; ++i) {
-				triangleLines[i].position = sf::Vector2f(maxTriangle[i].x + x0 + 5, y0 - maxTriangle[i].y + 5);
-				triangleLines[i].color = sf::Color::Red;
+				triangleLines[i].position = Vector2f(maxTriangle[i].x + x0 + 5, y0 - maxTriangle[i].y + 5);
+				triangleLines[i].color = Color::Red;
 			}
-			triangleLines[3].position = sf::Vector2f(maxTriangle[0].x + x0 + 5, y0 - maxTriangle[0].y + 5);
-			triangleLines[3].color = sf::Color::Red;
+			triangleLines[3].position = Vector2f(maxTriangle[0].x + x0 + 5, y0 - maxTriangle[0].y + 5);
+			triangleLines[3].color = Color::Red;
 			window.draw(triangleLines);
 		}
 
